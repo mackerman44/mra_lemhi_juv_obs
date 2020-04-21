@@ -1,0 +1,99 @@
+"Species","StreamName","ChannelTY","M","C","R","N","SE","95% LCI","95% UCI","probCap","probCap_SE"
+"Brook Trout","Big Eightmile Creek","Pool-Riffle_1",103,73,44,170,11.9,145,209,0.605882352941176,0.0424117647058824
+"Brook Trout","Big Springs Creek","Pool-Riffle_1",53,66,20,171,23.8,124,250,0.309941520467836,0.043138059573886
+"Brook Trout","Big Springs Creek","Pool-Riffle_2",306,217,70,942,80,785,1149,0.32484076433121,0.0275873260578522
+"Brook Trout","Big Timber Creek","Island_Braided_2",56,25,18,77,7.4,65,105,0.727272727272727,0.0698937426210154
+"Brook Trout","Big Timber Creek","Meandering_1",103,118,13,883,199.4,553,1456,0.116647791619479,0.0263415284812278
+"Brook Trout","Bohannon Creek","Plane-Bed_2",39,37,4,303,108.2,145,694,0.128712871287129,0.0459628141031925
+"Brook Trout","Bohannon Creek","Plane-Bed_5",154,62,30,314,35.5,252,415,0.490445859872611,0.0554484968964258
+"Brook Trout","Bohannon Creek","Step-Pool_6",138,118,27,590,85.7,435,826,0.233898305084746,0.0339747199080724
+"Brook Trout","Canyon Creek","Pool-Riffle_1",32,29,5,164,50.5,87,346,0.195121951219512,0.0600832837596669
+"Brook Trout","East Fork Bohannon Creek","Plane-Bed_3",22,13,2,106,44.4,47,303,0.207547169811321,0.086934852260591
+"Brook Trout","East Fork Bohannon Creek","Step-Pool_4",13,21,4,61,17.7,31,137,0.213114754098361,0.0618382155334587
+"Brook Trout","Hawley Creek","Plane-Bed_1",224,206,58,788,74,642,986,0.284263959390863,0.0266948388260455
+"Brook Trout","Hawley Creek","Pool-Riffle_2",57,35,11,173,35.1,116,286,0.329479768786127,0.0668482074242374
+"Brook Trout","Kenney Creek","Plane-Bed_1",170,105,21,823,142.8,580,1210,0.206561360874848,0.0358407804774342
+"Brook Trout","Kenney Creek","Pool-Riffle_2",82,38,9,323,78.9,201,569,0.253869969040248,0.062013438257819
+"Brook Trout","Lee Creek","Pool-Riffle_1",61,15,12,75,7.9,65,108,0.813333333333333,0.0856711111111111
+"Brook Trout","Lemhi River","Island_Braided_2",6,4,3,8,1.1,6,18,0.75,0.103125
+"Brook Trout","Lemhi River","Island_Braided_3",1,0,0,NA,NA,NA,NA,NA,NA
+"Brook Trout","Lemhi River","Meandering_1",424,498,97,2163,171,1819,2592,0.196024040684235,0.0154970462122072
+"Brook Trout","Little Springs Creek","Meandering_1",7,3,0,NA,NA,NA,NA,NA,NA
+"Brook Trout","Little Springs Creek","Meandering_2",3,1,0,NA,NA,NA,NA,NA,NA
+"Brook Trout","Pratt Creek","Plane-Bed_1",86,61,9,538,140.1,319,965,0.159851301115242,0.0416267049930211
+"Brook Trout","Pratt Creek","Step-Pool_2",20,10,1,114,57.4,34,224,0.175438596491228,0.0883348722683903
+"Bull Trout","Big Bear Creek","Pool-Riffle_4",7,5,0,NA,NA,NA,NA,NA,NA
+"Bull Trout","Big Timber Creek","Confined_3",12,11,2,51,19.7,23,145,0.235294117647059,0.0908881199538639
+"Bull Trout","Big Timber Creek","Island_Braided_2",4,4,2,7,1.7,5,21,0.571428571428571,0.138775510204082
+"Bull Trout","Big Timber Creek","Pool-Riffle_4",62,70,17,248,41.6,171,377,0.25,0.0419354838709677
+"Bull Trout","Big Timber Creek","Pool-Riffle_5",152,120,34,528,65.3,406,708,0.287878787878788,0.0356031910009183
+"Bull Trout","Bohannon Creek","Plane-Bed_2",1,0,0,NA,NA,NA,NA,NA,NA
+"Bull Trout","Bohannon Creek","Step-Pool_6",37,39,3,379,152.5,155,938,0.0976253298153034,0.0392819598861049
+"Bull Trout","Canyon Creek","Pool-Riffle_1",4,0,0,NA,NA,NA,NA,NA,NA
+"Bull Trout","East Fork Bohannon Creek","Step-Pool_4",3,0,0,NA,NA,NA,NA,NA,NA
+"Bull Trout","Hawley Creek","Plane-Bed_1",7,13,5,18,2.7,11,36,0.388888888888889,0.0583333333333333
+"Bull Trout","Hawley Creek","Pool-Riffle_2",5,9,3,14,3,8,35,0.357142857142857,0.076530612244898
+"Bull Trout","Hayden Creek","Confined_3",83,48,11,342,76.5,220,574,0.242690058479532,0.0542859341335796
+"Bull Trout","Hayden Creek","Island_Braided_1",33,27,7,118,29.3,71,222,0.279661016949153,0.0694412525136455
+"Bull Trout","Hayden Creek","Island_Braided_2",68,51,16,210,35.4,148,320,0.323809523809524,0.0545850340136054
+"Bull Trout","Hayden Creek","Plane-Bed_4",141,62,12,687,156.2,440,1137,0.205240174672489,0.046664505507777
+"Bull Trout","Kenney Creek","Plane-Bed_1",2,2,1,4,0.9,2,13,0.5,0.1125
+"Bull Trout","Kenney Creek","Pool-Riffle_2",59,64,18,204,31.9,145,305,0.28921568627451,0.0452253940792003
+"Bull Trout","Lemhi River","Island_Braided_2",3,2,0,NA,NA,NA,NA,NA,NA
+"Bull Trout","Lemhi River","Island_Braided_3",25,29,5,129,38.5,69,273,0.193798449612403,0.0578390721711436
+"Bull Trout","Lemhi River","Island_Braided_4",11,15,4,37,9.9,21,84,0.297297297297297,0.0795471146822498
+"Bull Trout","Lemhi River","Island_Braided_5",2,0,0,NA,NA,NA,NA,NA,NA
+"Bull Trout","Lemhi River","Meandering_1",3,4,0,NA,NA,NA,NA,NA,NA
+"Bull Trout","Reservoir Creek","Plane-Bed_3",1,0,0,NA,NA,NA,NA,NA,NA
+"Chinook","Big Eightmile Creek","Pool-Riffle_1",48,40,10,182,39.7,116,311,0.263736263736264,0.0575292839029103
+"Chinook","Big Springs Creek","Pool-Riffle_1",17,54,0,NA,NA,NA,NA,NA,NA
+"Chinook","Big Springs Creek","Pool-Riffle_2",53,24,2,449,205.1,163,1086,0.11804008908686,0.0539198714292092
+"Chinook","Big Timber Creek","Island_Braided_2",9,5,1,29,12.6,13,102,0.310344827586207,0.134839476813317
+"Chinook","Big Timber Creek","Meandering_1",10,19,1,109,54.5,32,214,0.0917431192660551,0.0458715596330275
+"Chinook","Canyon Creek","Pool-Riffle_1",17,12,5,38,8.8,24,77,0.447368421052632,0.103601108033241
+"Chinook","Hayden Creek","Confined_3",16,3,0,NA,NA,NA,NA,NA,NA
+"Chinook","Hayden Creek","Island_Braided_1",178,108,12,1500,362.5,924,2519,0.118666666666667,0.0286777777777778
+"Chinook","Hayden Creek","Island_Braided_2",68,57,7,499,145.6,276,963,0.13627254509018,0.0397620893088783
+"Chinook","Hayden Creek","Plane-Bed_4",58,30,8,202,49.8,126,366,0.287128712871287,0.0707871777276737
+"Chinook","Lee Creek","Pool-Riffle_1",125,44,23,235,29,187,321,0.531914893617021,0.0656405613399728
+"Chinook","Lemhi River","Island_Braided_2",437,408,40,4368,608.8,3229,6056,0.100045787545788,0.013944110681748
+"Chinook","Lemhi River","Island_Braided_3",185,195,13,2603,623,1568,4601,0.0710718401844026,0.0170102790760211
+"Chinook","Lemhi River","Island_Braided_4",41,27,0,NA,NA,NA,NA,NA,NA
+"Chinook","Lemhi River","Island_Braided_5",3,0,0,NA,NA,NA,NA,NA,NA
+"Chinook","Lemhi River","Meandering_1",108,72,3,1988,848.9,814,4915,0.0543259557344064,0.0231978389451396
+"Chinook","Little Springs Creek","Meandering_1",5,5,2,11,3,6,31,0.454545454545455,0.12396694214876
+"Steelhead","Big Bear Creek","Pool-Riffle_4",40,18,5,129,37.5,75,266,0.310077519379845,0.0901388137732107
+"Steelhead","Big Eightmile Creek","Pool-Riffle_1",14,6,5,16,1.9,14,30,0.875,0.10390625
+"Steelhead","Big Springs Creek","Pool-Riffle_1",197,245,91,528,31.8,453,626,0.373106060606061,0.0224711604683196
+"Steelhead","Big Springs Creek","Pool-Riffle_2",103,106,28,383,50.8,286,530,0.268929503916449,0.0356700229737744
+"Steelhead","Big Timber Creek","Confined_3",88,81,22,316,47.3,230,456,0.278481012658228,0.0416840249959942
+"Steelhead","Big Timber Creek","Island_Braided_2",286,168,94,510,28.2,451,589,0.56078431372549,0.0310080738177624
+"Steelhead","Big Timber Creek","Meandering_1",37,21,3,208,80,98,519,0.177884615384615,0.0684171597633136
+"Steelhead","Big Timber Creek","Pool-Riffle_4",256,221,42,1326,163.9,1024,1746,0.193061840120664,0.0238633752607668
+"Steelhead","Big Timber Creek","Pool-Riffle_5",141,129,37,485,56,377,642,0.290721649484536,0.0335678605590392
+"Steelhead","Bohannon Creek","Plane-Bed_1",170,270,39,1158,146.2,877,1549,0.146804835924007,0.0185344274715801
+"Steelhead","Bohannon Creek","Plane-Bed_2",167,132,24,893,145.7,638,1285,0.187010078387458,0.0305121706842695
+"Steelhead","Bohannon Creek","Plane-Bed_5",195,76,30,486,61,380,652,0.401234567901235,0.0503607173703196
+"Steelhead","Bohannon Creek","Step-Pool_6",108,95,24,418,62,305,594,0.258373205741627,0.0383232984592844
+"Steelhead","Canyon Creek","Pool-Riffle_1",26,16,5,76,20.5,45,155,0.342105263157895,0.0922783933518005
+"Steelhead","East Fork Bohannon Creek","Plane-Bed_3",19,12,1,129,65.5,39,253,0.147286821705426,0.0747851691605072
+"Steelhead","East Fork Bohannon Creek","Step-Pool_4",20,25,4,108,35,54,246,0.185185185185185,0.0600137174211248
+"Steelhead","Hawley Creek","Plane-Bed_1",208,287,53,1114,116.7,882,1424,0.186714542190305,0.0195597729565607
+"Steelhead","Hawley Creek","Pool-Riffle_2",521,362,136,1382,79.8,1218,1585,0.37698986975398,0.0217683007281965
+"Steelhead","Hayden Creek","Confined_3",215,113,38,630,73.3,498,825,0.341269841269841,0.0397064751826657
+"Steelhead","Hayden Creek","Island_Braided_1",562,372,95,2186,174.3,1851,2610,0.257090576395242,0.0204990336073608
+"Steelhead","Hayden Creek","Island_Braided_2",338,248,77,1081,88.5,907,1309,0.312673450508788,0.0255981502035409
+"Steelhead","Hayden Creek","Plane-Bed_4",119,87,19,527,92.5,368,787,0.225806451612903,0.0396339597233274
+"Steelhead","Kenney Creek","Plane-Bed_1",666,561,117,3176,234.8,2715,3740,0.209697732997481,0.0155028424772697
+"Steelhead","Kenney Creek","Pool-Riffle_2",405,316,111,1148,74,996,1340,0.352787456445993,0.022740654858017
+"Steelhead","Lee Creek","Pool-Riffle_1",42,19,13,60,7.1,49,88,0.7,0.0828333333333333
+"Steelhead","Lemhi River","Island_Braided_2",576,386,69,3189,321.2,2595,3958,0.180620884289746,0.0181923574894532
+"Steelhead","Lemhi River","Island_Braided_3",165,119,11,1659,420.7,962,3068,0.0994575045207957,0.0252210802603368
+"Steelhead","Lemhi River","Island_Braided_4",531,427,53,4216,503.8,3304,5428,0.125948766603416,0.0150505191211577
+"Steelhead","Lemhi River","Island_Braided_5",36,17,2,221,97.1,93,633,0.16289592760181,0.0715710161544604
+"Steelhead","Lemhi River","Meandering_1",510,420,171,1250,59.6,1119,1408,0.408,0.01945344
+"Steelhead","Little Springs Creek","Meandering_1",83,52,16,261,45.4,184,397,0.318007662835249,0.0553162754510357
+"Steelhead","Little Springs Creek","Meandering_2",31,22,8,81,17.1,53,143,0.382716049382716,0.0807956104252401
+"Steelhead","Pratt Creek","Plane-Bed_1",123,80,10,912,233.9,545,1598,0.134868421052632,0.0345896093028624
+"Steelhead","Pratt Creek","Step-Pool_2",178,139,17,1391,282.8,921,2158,0.127965492451474,0.0260162769700049
+"Steelhead","Reservoir Creek","Plane-Bed_3",52,42,10,206,45.9,131,354,0.252427184466019,0.0562446978980111

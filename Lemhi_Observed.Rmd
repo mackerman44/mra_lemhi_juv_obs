@@ -1,0 +1,356 @@
+---
+title: "Patterns in observed juvenile densities in the Lemhi River watershed"
+subtitle: "Points to Ponder"
+author:
+  - name: Braden Lott
+    affiliation: Biomark, Inc.
+  - name: Mike Hall
+    affiliation: Biomark, Inc.
+  - name: Jared Barker
+    affiliation: Biomark, Inc.
+  - name: Mike Ackerman
+    affiliation: Biomark, Inc.
+  - name: Kevin See
+    affiliation: Biomark, Inc.    
+date: '`r format(Sys.Date(), "%B %d, %Y")`'
+output: 
+  bookdown::html_document2:
+    theme: flatly
+    toc: yes
+    toc_depth: 3
+    toc_float: yes
+    fig_height: 6
+    fig_width: 8
+    pandoc_args:
+    - --lua-filter=templates/scholarly-metadata.lua
+    - --lua-filter=templates/author-info-blocks.lua
+    - --lua-filter=templates/pagebreak.lua
+  bookdown::pdf_document2:
+    fig_caption: yes
+    fig_height: 6
+    fig_width: 7
+    includes:
+      in_header: templates/header_ABS.tex
+    toc: yes
+    pandoc_args:
+    - --lua-filter=templates/scholarly-metadata.lua
+    - --lua-filter=templates/author-info-blocks2.lua
+    - --lua-filter=templates/pagebreak.lua
+  word_document:  
+    fig_caption: yes
+    fig_width: 7
+    fig_height: 7
+    toc: yes
+institute:
+- biomark: Biomark, Inc.
+---
+```{r setup, include=FALSE, results = 'hide'}
+library(knitr)
+knitr::opts_chunk$set(echo=FALSE, warning=FALSE, message=FALSE)
+
+# load packages for analysis
+library(FSA)
+library(tidyverse)
+library(lubridate)
+library(scales)
+library(janitor)
+library(rgdal)
+library(raster)
+
+# some options for table formating
+options(knitr.kable.NA = '-')
+# options(knitr.table.format = "pandoc")
+
+# set default theme for ggplot
+theme_set(theme_bw())
+
+```
+
+```{r read-in-shapefiles, results = 'hide'}
+library(sf)
+library(magrittr)
+
+lem_list = 2015:2019 %>%
+  as.list() %>%
+  rlang::set_names() %>%
+  map(.f = function(x) {
+    sf_df = st_read(paste0('Data/GIS_files/Lemhi', x, '_density.shp')) %>%
+      mutate(Year = x)
+    return(sf_df)
+  })
+names(lem_list[["2015"]]) = str_replace(names(lem_list[["2015"]]), 'pCapt$', 'pCaptur')
+names(lem_list[["2015"]]) = str_replace(names(lem_list[["2015"]]), 'pCaptSE$', 'pCapt_1')
+names(lem_list[["2015"]]) = str_replace(names(lem_list[["2015"]]), 'dens_m$', 'Fishper')
+names(lem_list[["2015"]]) = str_replace(names(lem_list[["2015"]]), 'dens_SE$', 'Fishp_1')
+lem_list %<>%
+  map(.f = function(x) {
+    x %<>%
+      mutate_at(vars(SH_pCaptur:CK_Fishp_1),
+            list(~ as.numeric(as.character(.))))
+    names(x) = str_replace(names(x), '_1$', '_SE')
+    return(x)
+  })
+
+lem_sf = lem_list[[1]]
+for(i in 2:length(lem_list)) {
+  lem_sf %<>%
+    rbind(lem_list[[i]])
+}
+
+tabyl(lem_sf, Year)
+
+```
+
+# Introduction
+
+The Lemhi River watershed has been extensively sampled over the past ten years to satisfy a variety of projects and goals over that course of time. The underlying drivers for these goals have been to standardize methodologies to match fish abundance and density estimates with measurements of habitat quantity and quality. The standardized data collection would establish a baseline to measure changes in fish densities or capacity in response to aggressive stream restoration work. This was accomplished by 1) overlaying fish abundance with CHaMP generated habitat measurements that were rolled up to the tributary level and 2) overall juvenile parr abundance being rolled up to the entire Lemhi River watershed for life cycle modeling. Where most of this sampling occurred to accomplish specific tasks, certain aspects can be lost in the analyses such as the observed level of understanding for juvenile fish density or behavior under varous conditions such as season, temperature, geomorphology, etc. An example being that fish could be using micro-habitat, tributary connections, side channels, etc. at certain times of the year, or any other areas that are seemingly insignificant such as pools or slow water refuge that is found within fast water channel unit types such as riffles or rapids. These relationships can sometimes be lost due to the scale of data collection and interpretation.
+
+Capitalizing on the knowledge base from field crews can help us better understand and identify information gaps, and hopefully, bridge some of those gaps between higher level analyses and on the ground field work. The objective of this document is to hypothesize, base on field crew experience and knowledge base, why we're observing higher juvenile abundance and densities in some areas over others in the Lemhi River. We also attempt to test those hypotheses by taking a deeper dive into data that has been collected from various sources or projects (e.g., temperature, LiDAR). Other caveats for attempting to link fish and habitat can be tricky in that obtaining accurate and unbiased fish and habitat samples is countered by logistics in money and time where management attempts to balance the two without sacrificing too much from one or the other.
+
+# Topics
+
+## Sampling Methods
+
+One caveat to consider when interpreting juvenile abundance or density information is restrictions in the timing and/or conditions during sampling. When sampling occurs, our field crews strive to have optimum capture conditions to maximize capture probability and anything that impairs conditions can introduce error, bias, or additional uncertainty. In most situations, sampled areas may be too large or too swift to adequately block with nets, thus not allowing crews to close the population to immigration/emigration. As an example, when we sample in deeper water, the gear (e.g. electrofishers) can become less effective resulting in lower capture probabilities. Anything typically over 1 meter deep can be particularly difficult where the field of electricity is limited and fish are able to escape before experiencing galvano-taxis. Schooling juvenile Chinook salmon can occur in these larger pools, generally in an eddy on the edge of the pool. And in those deep pools the shocking field does a suboptimal job of attracting/shocking fish and the school of fish may just be "pushed around" and not captured. Using two shockers help remedy the situation, but if the fish are not pushed into an adjacent electroshocker's field, or get caught between the two fields, they may scatter and move downstream eluding capture. This effect can be magnified anytime habitat features such as a large log or root wad, typically considered good fish cover, are found within the unit. This situation can be encountered often in the field, during the mark event, and the crew may only capture a very small proportion of juvenile Chinook while a very high proportion escape. 
+
+Conversely, this is not always the case and there are numerous times when crew do not observe any other individuals other than the few that are captured. At those same locations and during the recapture event, there are times when the field crew was able to corral and capture a higher proportion of individuals where fewer individuals were able to escape the field. Typically, field personnel can tell that a school of juvenile Chinook did in fact use a pool, but it is unclear how big the school was during the initial pass before we began pushing fish around, and we are unable to locate recaptures. This can make it difficult to estimate the total abundance of Chinook salmon for that particular locations. Field crews can counter this effect by choosing a less invasive form of sampling such as snorkeling, but in most areas where juveniles are found, visibility is very poor in the Lemhi River, limiting the field of vision to less than a meter. In other areas, the depth can be too shallow for a snorkeler to submerse their head into the water enough to get a full horizontal field of vision. Another challenge to snorkeling is that just movement by the snorkeler into and out of the water can displace fish. We've experience fish displacement from passive gear such as mobile detection wands that do not deliver an electrical current into the water and just the act of placing the wand in the water causes fish to react just based on detecting movement alone.
+
+Take home message: capture probabilities should be taken into consideration when interpreting juvenile abundance and density estimates. Figures \@ref(fig:chnk-capt-prob-by-year) and \@ref(fig:Omykiss-capt-prob-by-year) show estimated capture probabilities for Chinook salmon and *O. mykiss*, facetted by year, for reaches in which roving surveys were conducted each year.
+
+```{r chnk-capt-prob-by-year, results = 'hide', fig.cap = "Juvenile Chinook salmon estimated capture probabilities, faceted by year, from summer roving electrofishing surveys conducted in the Lemhi River."}
+# plot of Chinook capture probability, faceted by year
+lem_sf %>%
+  ggplot() +
+  geom_sf(aes(color = CK_pCaptur), size = 1.5) +
+  scale_color_viridis_c(direction = -1,
+                        na.value = 'gray90') +
+  facet_wrap(~ Year) +
+  theme(panel.grid = element_blank(),
+        axis.text = element_blank()) +
+  labs(color = 'Chnk\nProb.\nCapture')
+
+```
+
+```{r Omykiss-capt-prob-by-year, results = 'hide', fig.cap = "O.mykiss estimated capture probabilities, faceted by year, from summer roving electrofishing surveys conducted in the Lemhi River."}
+# plot of "steelhead"" capture probability, faceted by year
+lem_sf %>%
+  ggplot() +
+  geom_sf(aes(color = SH_pCaptur), size = 1.5) +
+  scale_color_viridis_c(direction = -1,
+                        na.value = 'gray90') +
+  facet_wrap(~ Year) +
+  theme(panel.grid = element_blank(),
+        axis.text = element_blank()) +
+  labs(color = 'O.mykiss\nProb.\nCapture')
+
+```
+
+## Microhabitat
+
+Fish microhabitat, or the habitat in the immediate vicinity used by individual fish (e.g. cover, substrate) can be mis-represented when sampling at larger scales such as channel units, sites, or reaches or summarizing data at larger scales. The amount of available microhabitat, such as slow water refuge or cover within any given channel unit, can play an important role on fish densities. In some areas we've sampled, such as the upper Secesh River, where water is clear and pools are deep, we do find large quantities of juvenile Chinook salmon schooling in large pools. However, in the Lemhi River, we don't find this to be true. It does occur to a small degree, but the larger pools tend to include predatory fishes that tend to displace juveniles, not allowing them to congregate. Most of the juvenile Chinook salmon and steelhead in the Lemhi River are found in groups of 10 or less and in small pocket areas. And these pockets can occur in any channel unit type: pool, riffle, rapid, run. If particular conditions are met, then juvenile Chinook salmon may congregate there. 
+
+From experience and sampling, it appears that the most important metrics in these areas are size, flow, temperature, and cover. We know that juvenile Chinook salmon like small side/pocket pools through observations in the field, but more importantly than that, they only group if the pool has a particular flow regime. They appear to like areas with both fast and slow velocity water. The faster water adjacent to slow water seems to provide enough turbulence to increase dissolved oxygen, provide cleaner gravel or cobble substrate, and cooler water temperatures during summer months. Further, from an observed level, larger slack water areas seem noticably warmer. Areas in the lower Lemhi River, despite appearing like good stream habitat in particular locations, become less than ideal where all optimal conditions are not achieved; e.g. low flows provide plenty of microhaitat refuge but is countered by higher temperatures and embedded substrate which limits refuge from predators. This forces fish to either keep moving downstream to seek adequate refuge whether it be to connecting tributaries with cooler temperatures, less predation, and with better cover or to move out of the Lemhi River completely to attempt to seek rearing habitat in the mainstem Salmon River.
+
+## Movement Into Tributaries
+
+We've observed a significant number of juveniles seeking refuge within tributaries with very limited primary productivity. These places typically provide lower flows, less predators, and cooler temperatures which appear to be more favorable or preferred conditions in the Lemhi River. Tributaries such as Lee Creek and Big Eightmile are positioned in a transitional area in the upper Lemhi River. The Lemhi River in that segment is straight, narrow, and with high velocities near where those two tributaries connect to the mainstem Lemhi River. These two creeks tend to be slower and more shallow where juveniles can expend less energy than if they remained in the mainstem Lemhi. Lee Creek further has a larger number of undercuts with woody debris for juvenile fish to hold in, and Big Eightmile Creek has large amounts of aquatic vegetation and woody debris also providing adequate cover. While these two tributaries may not always be the ideal habitat for juveniles, it's apparent that they favor these areas over the mainstem Lemhi River during warm summer months. Moreover, in some years, when Chinook densities decreased as crews moved up Lee Creek, field crews noted an increase in the presence of brook trout (*Salvelinus fontinalis*). A similar situation occurs in Big Eightmile Creek, at least once larger brook trout begin to appear there (i.e., juvenile Chinook and even steelhead densities decrease as brook trout densities increase). Canyon Creek and Big Timber Creek also seem to follow this trend, but to a smaller degree. Juvenile Chinook salmon seem to only move within the first lower 1km which provides more favorable conditions than in the Lemhi River, but observed densities decrease when they open up with less cover or observed species become largely predators (e.g. brook trout). 
+
+## Winter Sampling
+
+Juvenile fish sampling during winter months introduces additional challenges and sampling becomes increasingly difficult. Freezing nets, anchor ice, limited fish handling time, night sampling, and fish habitat covered with shelf ice effectively reduce capture probability and can introduce bias while increasing the number of assumptions and unknowns. There appears to be a slight shift in habitat selection during the winter for juvenile fishes; that shift appears to be more prominent for Chinook salmon than for steelhead. Steelhead tend to distribute similarly during winter months compared to other times of the year where larger individuals are found in the deep pools and smaller individuals prefer shallow edges of the river/creek with substrate that has interstitial spaces that are small enough for them to hide. 
+
+Juvenile Chinook salmon habitat in the winter can be difficult to determine because the total abundance present is typically low. During winter months, most juvenile Chinook tend to be found in very shallow, margin water where velocity is slow and mixed with habitat features like wood, cobble, or boulders. A few individuals can be found within deeper pools, but those pools tend to be covered in shelf ice so their overall presence in those areas can be difficult to measure. Overall, it's difficult to accurately represent channel units, reaches, or sites when shelf and anchor ice present are present and available and used habitat are difficult to sample. Extrapolation from the few areas that can be sampled is difficult because less than ideal assumptions need to be given the degree of unknown variables.
+
+## Restoration Sites
+
+We have samples several restoration areas in the Lemhi River over the past years or decade. As an example, the Amonson restoration area involves a mainstem portion along with two primary side channels. The mainstem channel has a lot of deep rootwads and pools on bends in the river with no vegetative cover. The pools provide great habitat for large resident predatory fish, which seems to prevent juvenile Chinook salmon and steelhead from properly using those areas. If those pools were less deep and winder, with perhaps a back-eddy pool with cover (e.g. rootwad), then juveniles might be able to hold out of the fast water and seek refuge inside the woody debris. The side channels at the Amonsom reach have a muddy bottom and lots of woody debris. In the summer, the muddy bottom (fine sediment) areas don't seem appealing to juveniles. We theorize that when the water is slow, and detritus is no longer suspended in the river but decaying on the river bottom, this leads to decreased dissolved oxygen. The woody debris is okay, but seems to break up the channel too much and not allow enough turbulence to flush out the sediment. Logs located in this area don't seem as beneficial as the rootwads on the edges of the river as sampling crews tend to capture more juveniles in the rootwads. The pools with the woody debris are deep and slow allowing those areas to collect sediment and causing a soft, muddy bottom. Depending on project goals, these pools do seem to slow down and capture sediment load; however, do not allow for clean exposed substrate on the margins. The Amonson side channel has little or no juvenile activity during summer sampling whereas, during winter months, there appeared to be higher juvenile densities where flows are slower than the main channel and more than likely a better option for cover and refuge.
+
+The Eagle Valley Ranch (EVR) sites have a multitude of side channels with both pros and cons. One of the pros is that flow in the winter is more favorable than in the summer. Flows during the summer seem to be too swift in the EVR2 subreach side channel and has little slow water refuge in comparison to the main channel. The winter time, however, seems to be more favorable for juveniles than the summer. The EVR3 subreach side channels are too long for juvenile salmonids, but seem appealing to warmer water non-target species such as shiners and dace. These side channels get too warm in the summer, need additional streamside vegetation, and are too long for fish to utilize the entire area as juveniles typically are not found in middle portions of the side channel. With a little more flow and connectivity to the main channel, juvenile salmonids will be able to utilize more of the available water that is being diverted from the main channel. The mainstem channels did have a higher observed level than the side channels where there is a fair amount of slower velocity pocket water found within and adjacent to the swifter thalweg of the channel unit.
+
+# Hypotheses
+
+With the above considerations in mind, we've made several hypotheses, specific largely to the Lemhi watershed, that we include below:
+
+1. We believe that juvenile densities are associated with the availablity of microhabitat. Small pockets (often < 1m$^2$ in area), regardless of channel unit type, have provided high capture numbers from sampling. This has been apparent during both summer and winter sampling.
+
+2. We believe that in many cases sufficient habitat is available; however, ideal conditions are not always met and may be in rare form. As as example, while certain areas may provide sufficient cover, flow, depth, and substrate, the temperature could be suboptimal and high densities of predators may deter occupancy. These attributes are interchangable, and if even one is leass than ideal, then juvenile fish presence may be limited. We feel that the lower Lemhi River has sufficent microhabitat and refuge for juveniles during summer months, but extreme high temperatures force individuals to seek out better habitat which may not be readily available. This provokes them to move and expose themselves to higher energy expenditures, higher predation, and lower survival.
+
+3. Given the amount we observe juveniles moving into the lower portions of Lemhi River tributaries, we believe that these areas provide higher habitat suitability than the mainstem Lemhi during certain times (e.g. summer). Small, cool tributaries seem to be used more so than other areas such as small side channels or off-channel areas.
+
+4. We believe that fish use some areas differently in summer months than in winter. Side channels seems to have higher juvenile densities in the winter than the summer and could be due to limited ability for movement with low energy expenditure being tied to areas that are shallow, slower, and with limited available habitat for larger, predatory individuals. Side channels in the Lemhi River also don't seem to freeze over as much as smaller tributaries in the winter and could provide slightly warmer, more conducive conditions.
+
+5. Current restoration efforts may place too large an emphasis on large woody debris and deep pools. Rather, we believe that additional emphasis should be placed on a balance between providing slow water refuge with larger substrate and rootwads to allow areas that can trap sediment without creating an area where mud and silt fill the interstitial spaces and adequate area for larger predators to inhabit. Those areas need to have enough flow to provide adequate areas for cooler temperature, less embeddedness, and adequate oxygen.
+
+<!--
+
+6. With the limitations in sampling gear and logistics from balancing the time and money from current sampling, we believe that capture probabilities need to be improved and robust sampling strategies need to be explored.  Strategies that capture abundances without the allowance of movement between events such as mark/recapture sampling while keeping high accuracy and precision for fish and habitat. We believe that more time and expenditure needs to focus on limiting movement for closed population abundance estimators along with measuring the habitat at even a finer scale than the channel unit.  If fish capture, observations, and abundances can be related to the degree of microhabitat availability, then habitat needs to be measured at the microhabitat scale.  Furthermore, the spatial scale of a fish varies between summer, winter, time of day/night, and from differences in habitat type which makes it challenging from sampling design perspective.  We feel that more of a continuum approach needs to be explored where fish, and habitat depending on if the condition changes, needs to be monitored at multiple levels and not assume that fish utilizing one area during differring temporal or spatial scales is representative of usage for a particular time or area.  Fish utilizing one microhabitat in the morning versus mid afternoon or evening can vary greatly.  This is challenging because it is impossible to sample everything needed to accomplish this task and is understood that a need for extrapolating the fine scale temporal and spatial areas to a much larger area such as sites, reaches, tributaries, etc. is desirable from a management perspective.  
+
+-->
+
+# Observed Juvenile Abundance and Density Results
+
+We have observed higher juvenile densities for Chinook salmon and steelhead in Hayden Creek and other tributaries in comparison to the mainstem Lemhi River. Hayden Creek is small, cooler, and has additional microhabitat (i.e. habitat complexity) available relative to the Lemhi which appear to provide overall better habitat quality. These smaller areas also tend to have increased visibility and catchability which should perhaps be considered when interpreting higher densities. There still are deeper pools within Hayden Creek, but there we tend to find larger *O. mykiss*, bull trout (*Salvelinus confluentus*), or cutthroat trout (*O. clarki*) while smaller Chinook salmon juveniles are found in higher densities in the shallower margins or in areas that have shallow, slow water refugia behind boulders or vegetation. 
+
+## Observed Density Plots
+
+The following are pulled from data gathered between 2015 through 2019 summer electrofishing collection events where we felt like those year had the most reliable datasets. Figures \@ref(fig:chnk-dens-by-year) and \@ref(fig:Omykiss-dens-by-year) show observed juvenile densities for Chinook salmon and steelhead, respectively, during those years.
+
+```{r chnk-dens-by-year, fig.cap = "Juvenile Chinook salmon observed densities, faceted by year, from summer roving electrofishing surveys conducted in the Lemhi River."}
+# plot of Chinook parr density, faceted by year
+lem_sf %>%
+  ggplot() +
+  geom_sf(aes(color = CK_Fishper), size = 1.5) +
+  scale_color_viridis_c(direction = -1,
+                        na.value = 'gray90') +
+  facet_wrap(~ Year) +
+  theme(panel.grid = element_blank(),
+        axis.text = element_blank()) +
+  labs(color = 'Chnk\nDensity\n(per/m)')
+
+```
+
+```{r Omykiss-dens-by-year, fig.cap = "O.mykiss observed densities, faceted by year, from summer roving electrofishing surveys conducted in the Lemhi River."}
+# plot of "steelhead" density, faceted by year
+lem_sf %>%
+  ggplot() +
+  geom_sf(aes(color = SH_Fishper), size = 1.5) +
+  scale_color_viridis_c(direction = -1,
+                        na.value = 'gray90') +
+  facet_wrap(~ Year) +
+  theme(panel.grid = element_blank(),
+        axis.text = element_blank()) +
+  labs(color = 'O.mykiss\nDensity\n(per/m)')
+
+```
+
+## Channel Type
+
+Density estimates by channel unit type indicate that Chinook salmon seem to prefer the Island Braided and Meandering channel unit types (Figure \@ref(fig:Chnk-dens-by-channel)). Similarly, steelhead seem to prefer the Island Braided type (Figure \@ref(fig:Omykiss-dens-by-channel)); all other channel types had similar observed densities.
+
+```{r Chnk-dens-by-channel, fig.cap = "Juvenile Chinook salmon density, by geomorphic channel type, from summer roving electrofishing surveys conducted in the Lemhi River ."}
+channel_c = lem_sf %>%
+  # is this filter appropriate?
+  filter(Sampled == "Sampled") %>%
+  # get rid of everything after underscore in ChannelTY
+  mutate(ChannelTY = sub("_[^_]+$", "", ChannelTY)) %>%
+  ggplot(aes(x = ChannelTY)) +
+  geom_boxplot(aes(y = CK_Fishper), fill = "cornflowerblue") +
+  labs(x = "Channel Type",
+       y = "Juvenile Chinook Density (fish/m)") +
+  theme(axis.text.x = element_text(angle = -45, vjust = 0))
+channel_c
+
+```
+
+```{r Omykiss-dens-by-channel, fig.cap = "O.mykiss density, by geomorphic channel type, from summer roving electrofishing surveys conducted in the Lemhi River."}
+channel_s = lem_sf %>%
+  # is this filter appropriate?
+  filter(Sampled == "Sampled") %>%
+  # get rid of everything after underscore in ChannelTY
+  mutate(ChannelTY = sub("_[^_]+$", "", ChannelTY)) %>%
+  ggplot(aes(x = ChannelTY)) +
+  geom_boxplot(aes(y = SH_Fishper), fill = "coral3") +
+  labs(x = "Channel Type",
+       y = "O.mykiss Density (fish/m)") +
+  theme(axis.text.x = element_text(angle = -45, vjust = 0))
+channel_s
+
+```
+
+## Stream
+
+Figures \@ref(fig:Chnk-dens-by-stream) and \@ref(fig:Omykiss-dens-by-stream) shows observed densities by stream for Chinook salmon and *O. mykiss*, respectively. The densities by stream for juvenile Chinook salmon do meet expectations, as the majority of spawning occurs in the Lemhi River and Hayden Creek. However, Figure \@ref(fig:Chnk-dens-by-stream) also shows that juvenile Chinook salmon are using tributaries where no adult spawning occurs, which suggest that some tributaries are presenting conditions conducive to juvenile rearing (e.g. Lee Creek, Big Eightmile Creek).
+
+```{r Chnk-dens-by-stream, fig.cap = "Juvenile Chinook salmon density, by stream, from summer roving electrofishing surveys conducted in the Lemhi River."}
+stream_c = lem_sf %>%
+  # is this filter appropriate?
+  filter(Sampled == "Sampled") %>%
+  ggplot(aes(x = Stream)) +
+  geom_boxplot(aes(y = CK_Fishper), fill = "cornflowerblue") +
+  labs(x = "Stream",
+       y = "Juvenile Chinook Density (fish/m)") +
+  theme(axis.text.x = element_text(angle = -90, vjust = 0, size = 8))
+stream_c
+
+```
+
+```{r Omykiss-dens-by-stream, fig.cap = "O.mykiss density, by stream, from summer roving electrofishing surveys conducted in the Lemhi River."}
+stream_s = lem_sf %>%
+  # is this filter appropriate?
+  filter(Sampled == "Sampled") %>%
+  ggplot(aes(x = Stream)) +
+  geom_boxplot(aes(y = SH_Fishper), fill = "coral3") +
+  labs(x = "Stream",
+       y = "O.mykiss Density (fish/m)") +
+  theme(axis.text.x = element_text(angle = -90, vjust = 0, size = 8))
+stream_s
+
+```
+
+## Site
+
+Figures \@ref(fig:Chnk-dens-by-site) and \@ref(fig:Omykiss-dens-by-site) show estimated densities broken out by various restoration reaches. 
+
+```{r Chnk-dens-by-site, fig.cap = "Juvenile Chinook salmon density, by restoration site, from summer roving electrofishing surveys conducted in the Lemhi River."}
+site_c = read.csv("Data/Abundance/Rest_site_density.csv") %>%
+  ggplot(aes(x = SubSite)) +
+  geom_boxplot(aes(y = CK_FishperM), fill = "cornflowerblue") +
+  labs(x = "Site",
+       y = "Juvenile Chinook Density (fish/m)") +
+  theme(axis.text.x = element_text(angle = -90, vjust = 0, size = 8))
+site_c
+
+```
+
+```{r Omykiss-dens-by-site, fig.cap = "O.mykiss density, by restoration site, from summer roving electrofishing surveys conducted in the Lemhi River."}
+site_s = read.csv("Data/Abundance/Rest_site_density.csv") %>%
+  ggplot(aes(x = SubSite)) +
+  geom_boxplot(aes(y = SH_FishperM), fill = "coral3") +
+  labs(x = "Site",
+       y = "O.mykiss Density (fish/m)") +
+  theme(axis.text.x = element_text(angle = -90, vjust = 0, size = 8))
+site_s
+
+```
+
+## Temperature
+
+Figure \@ref(fig:dens-temp) shows the estimated linear density (fish/m) for juvenile Chinook salmon and steelhead along with modeled August mean stream temperatures at those sites from NorWeST (Isaak et al. 2017). There does appear to be a signal, especially for Chinook salmon, the stream densities are highest around the optimal 13-14&deg;C; and then tend to decline at higher temperatures. 
+
+```{r dens-temp, fig.cap = "Juvenile Chinook and O.mykiss densities in relation to location and mean temperatures using observations from summer electrofishing surveys and Norwest August mean temperature data."}
+load("Data/mra_temp_rkm_redd_data_prepped.Rdata")
+
+# set the coordinate reference system of norwest temp data to same as lem_sf
+mra_norwest = mra_norwest %>%
+  st_transform(crs = crs(lem_sf))
+
+# join norwest temp to lem_sf
+density_temp_sf = lem_sf %>%
+  st_join(mra_norwest,
+          join = st_nearest_feature,
+          left = T) %>%
+  dplyr::select(ChannelTY, Sampled, Stream, Year, CK_Fishper, SH_Fishper, ELEV, CANOPY, SLOPE, PRECIP,
+         CUMDRAI, S2_02_1)  # S2_02_1 historical composite 10-yr average August mean stream temperatures, 2002-2011.
+
+# just a quick example, norwest Aug temp and observed CK densities
+density_temp_sf %>%
+  ggplot() +
+  geom_point(aes(S2_02_1, CK_Fishper, color = "Chinook")) +
+  geom_smooth(aes(S2_02_1, CK_Fishper, color = "Chinook")) +
+  geom_point(aes(S2_02_1, SH_Fishper, color = "Steelhead")) +
+  geom_smooth(aes(S2_02_1, SH_Fishper, color = "Steelhead")) +
+  scale_color_manual(values = c("Chinook" = "cornflowerblue", "Steelhead" = "coral3"),
+                                name = "Species") +
+  labs(x = expression("August Mean Stream Temp " (degree*C)),
+       y = "Density (fish/m)")
+
+```
+
+
+# Discussion and Conclusions
+
+We feel that temperature and location do play an important role in habitat usage for juvenile Chinook over Steelhead. At this juncture, there has not been enough analysis or data to support evaluating relations between fish densities  and micro-habitat.  We also feel like there isn't enough data or analysis to support the hypothesis for evaluating winter habitat use and preference.  The displacement from predators is apparent in the field, but little data is available for the Lemhi to support the overall magitude of their presence along with their relation to habitat to evaluate whether there is significant overlap.
+
+# Literature Cited
+
+Isaak, D., S. Wenger, E. Peterson, J. Ver Hoef, D. Nagel, C. Luce, S. Hostetler, J. Dunham, B. Roper, S. Wollrab, G. Chandler, D. Horan, S. Parkes-Payne. 2017. The NorWeST summer stream temperature model and scenarios for the western U.S.: A crowd-sourced database and new geospatial tools foster a user community and predict broad climate warming of rivers and streams. Water Resources Research, 53:9181-9205. https://doi.org/10.1002/2017WR020969. 

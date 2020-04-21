@@ -1,0 +1,104 @@
+,Species,SiteName,n_PITtagged,n_moved,perc_moved
+1,Bull Trout,Amonson_SC1_2019,1,0,0.00%
+2,Bull Trout,Amonson_SC2_2019,2,0,0.00%
+3,Bull Trout,Arbon_2019,4,1,25.00%
+4,Bull Trout,Barton_2019,3,0,0.00%
+5,Bull Trout,BigTimber1_2019,1,1,100.00%
+6,Bull Trout,BigTimber2_2019,5,1,20.00%
+7,Bull Trout,BigTimber3b_2019,36,4,11.11%
+8,Bull Trout,Bohannon1_2019,1,0,0.00%
+9,Bull Trout,Bohannon2_2019,1,0,0.00%
+10,Bull Trout,Canyon_2019,1,1,100.00%
+11,Bull Trout,Hawley1_2019,1,0,0.00%
+12,Bull Trout,Hawley2_2019,3,1,33.33%
+13,Bull Trout,Hawley3_2019,6,3,50.00%
+14,Bull Trout,Hawley4_2019,1,0,0.00%
+15,Bull Trout,Hawley5_2019,2,0,0.00%
+16,Bull Trout,Hawley6_2019,3,0,0.00%
+17,Bull Trout,Hawley7_2019,3,2,66.67%
+18,Bull Trout,Hawley8_2019,1,0,0.00%
+19,Bull Trout,Hawley9_2019,9,1,11.11%
+20,Bull Trout,Hayden1_2019,33,1,3.03%
+21,Bull Trout,Hayden2_2019,34,4,11.76%
+22,Bull Trout,Hayden3a_2019,37,2,5.41%
+23,Bull Trout,Hayden4_2019,96,3,3.13%
+24,Bull Trout,Kenney1_2019,2,0,0.00%
+25,Bull Trout,Kenney2_2019,24,1,4.17%
+26,Bull Trout,LowerLemhi1a_2019,20,4,20.00%
+27,Bull Trout,LowerLemhi2_2019,13,3,23.08%
+28,Bull Trout,LowerLemhi3_2019,2,0,0.00%
+29,Bull Trout,Miller_2019,1,0,0.00%
+30,Bull Trout,Murphy_2019,4,1,25.00%
+31,Bull Trout,Thomas_2019,3,0,0.00%
+32,Bull Trout,UpperLemhi1_2019,2,1,50.00%
+33,Bull Trout,UpperLemhi2_2019,3,0,0.00%
+34,Bull Trout,UpperLemhi3_2019,2,0,0.00%
+35,Chinook,Amonson_SC1_2019,2,0,0.00%
+36,Chinook,Amonson_SC2_2019,2,0,0.00%
+37,Chinook,Arbon_2019,27,2,7.41%
+38,Chinook,Barton_2019,19,2,10.53%
+39,Chinook,BigSprings1_2019,33,0,0.00%
+40,Chinook,BigSprings2_2019,24,0,0.00%
+41,Chinook,BigSprings3_2019,24,0,0.00%
+42,Chinook,BigSprings4_2019,65,0,0.00%
+43,Chinook,BigTimber1_2019,28,0,0.00%
+44,Chinook,BigTimber2_2019,13,0,0.00%
+45,Chinook,Canyon_2019,25,2,8.00%
+46,Chinook,Hayden1_2019,271,2,0.74%
+47,Chinook,Hayden2_2019,113,2,1.77%
+48,Chinook,Hayden3a_2019,16,0,0.00%
+49,Chinook,Hayden4_2019,80,0,0.00%
+50,Chinook,LittleSprings1_2019,8,0,0.00%
+51,Chinook,LowerLemhi1a_2019,337,7,2.08%
+52,Chinook,LowerLemhi2_2019,68,0,0.00%
+53,Chinook,LowerLemhi3_2019,3,0,0.00%
+54,Chinook,Miller_2019,39,2,5.13%
+55,Chinook,Murphy_2019,100,2,2.00%
+56,Chinook,Thomas_2019,39,1,2.56%
+57,Chinook,THOR_SC_2019,25,1,4.00%
+58,Chinook,UpperLemhi1_2019,48,1,2.08%
+59,Chinook,UpperLemhi2_2019,44,1,2.27%
+60,Chinook,UpperLemhi3_2019,484,6,1.24%
+61,Steelhead,Amonson_SC1_2019,30,0,0.00%
+62,Steelhead,Amonson_SC2_2019,19,0,0.00%
+63,Steelhead,Arbon_2019,113,2,1.77%
+64,Steelhead,Barton_2019,76,1,1.32%
+65,Steelhead,BigSprings1_2019,49,5,10.20%
+66,Steelhead,BigSprings2_2019,108,3,2.78%
+67,Steelhead,BigSprings3_2019,69,4,5.80%
+68,Steelhead,BigSprings4_2019,80,5,6.25%
+69,Steelhead,BigTimber1_2019,37,1,2.70%
+70,Steelhead,BigTimber2_2019,295,7,2.37%
+71,Steelhead,BigTimber3b_2019,215,10,4.65%
+72,Steelhead,Bohannon1_2019,156,3,1.92%
+73,Steelhead,Bohannon2_2019,110,1,0.91%
+74,Steelhead,Bohannon3a_2019,21,1,4.76%
+75,Steelhead,Canyon_2019,27,3,11.11%
+76,Steelhead,Hawley1_2019,16,2,12.50%
+77,Steelhead,Hawley2_2019,31,3,9.68%
+78,Steelhead,Hawley3_2019,164,6,3.66%
+79,Steelhead,Hawley4_2019,163,3,1.84%
+80,Steelhead,Hawley5_2019,167,11,6.59%
+81,Steelhead,Hawley6_2019,33,1,3.03%
+82,Steelhead,Hawley7_2019,165,4,2.42%
+83,Steelhead,Hawley8_2019,53,5,9.43%
+84,Steelhead,Hawley9_2019,41,1,2.44%
+85,Steelhead,Hayden1_2019,511,6,1.17%
+86,Steelhead,Hayden2_2019,339,13,3.83%
+87,Steelhead,Hayden3a_2019,129,17,13.18%
+88,Steelhead,Hayden4_2019,104,3,2.88%
+89,Steelhead,Kenney1_2019,443,12,2.71%
+90,Steelhead,Kenney2_2019,354,12,3.39%
+91,Steelhead,LittleSprings1_2019,46,5,10.87%
+92,Steelhead,LittleSprings2_2019,27,0,0.00%
+93,Steelhead,LittleSprings3_2019,47,3,6.38%
+94,Steelhead,LowerLemhi1a_2019,92,8,8.70%
+95,Steelhead,LowerLemhi2_2019,534,9,1.69%
+96,Steelhead,LowerLemhi3_2019,42,1,2.38%
+97,Steelhead,Miller_2019,83,2,2.41%
+98,Steelhead,Murphy_2019,108,3,2.78%
+99,Steelhead,Thomas_2019,41,2,4.88%
+100,Steelhead,THOR_SC_2019,80,8,10.00%
+101,Steelhead,UpperLemhi1_2019,298,21,7.05%
+102,Steelhead,UpperLemhi2_2019,225,9,4.00%
+103,Steelhead,UpperLemhi3_2019,428,16,3.74%

@@ -1,0 +1,108 @@
+
+library(FSA) #citation: Ogle, D.H. 2017. FSA: Fisheries Stock Analysis. R package version 0.8.12.
+library(dplyr) #needs citation
+library(tidyr) # I like this better than reshape2
+library(forcats) # for dealing with factors
+
+setwd("D:/Analysis/Abundance_tables/2019")  #sets my working directory
+
+# read in the fish capture csv and filter it a little
+bio <- read.csv("RovingFishPoints_DASH.csv",
+                na.strings=" ",
+                header=TRUE) %>%
+  filter(Species %in% c('Chinook',
+                        'Steelhead',
+                        'Bull Trout'),
+         HabitatReach != '') %>%
+  tbl_df() %>%
+  mutate(Species = fct_drop(Species)) %>%
+  filter(!(FishStatus == 'Dead'& dceType == 'Mark'))
+
+#--------------------------------------------
+# which fish moved reaches?
+#--------------------------------------------
+allFish = bio %>%
+  filter(!is.na(PitTagID),
+         !is.na(Tag2RecaptureType)) %>%
+  tbl_df() %>%
+  select(Species, SiteName, PitTagID, HabitatReach) %>%
+  distinct() %>%
+  mutate(seen = 1) %>%
+  spread(HabitatReach, seen, fill = 0) %>%
+  mutate(totRchs = select(., -(Species:PitTagID)) %>%
+           rowSums())
+
+movingFish = allFish %>%
+  group_by(Species, SiteName) %>%
+  filter(totRchs > 1) %>%
+  ungroup()
+
+# how many and what percent moved, by species and stream name?
+movementsummary = allFish %>%
+  group_by(Species, SiteName) %>%
+  summarise(n_PITtagged = n_distinct(PitTagID)) %>%
+  left_join(movingFish %>%
+              group_by(Species, SiteName) %>%
+              summarise(n_moved = n_distinct(PitTagID))) %>%
+  mutate(n_moved = ifelse(is.na(n_moved), 0, n_moved)) %>%
+  mutate(perc_moved = n_moved / n_PITtagged)
+# looks like hardly any moved, so we'll ignore movement, or toss out those fish
+
+#--------------------------------------------
+# summarise capture histories by species, stream name and reach
+#--------------------------------------------
+capHist = bio %>%
+  filter(dceType == 'Mark') %>%
+  group_by(Species, SiteName, HabitatReach) %>%
+  summarise(M = n()) %>%
+  left_join(bio %>%
+              filter(dceType == 'Recapture') %>%
+              group_by(Species, SiteName, HabitatReach) %>%
+              summarise(C = n())) %>%
+  left_join(bio %>%
+              # drop fish recaptured in a different reach than they were marked in
+              filter(!PitTagID %in% movingFish$PitTagID) %>%
+              filter(dceType == 'Recapture',
+                     Tag2RecaptureType == 'Non-Efficiency Recapture') %>%
+              group_by(Species, SiteName, HabitatReach) %>%
+              summarise(R = n())) %>%
+  ungroup() %>%
+  mutate_at(vars(M:R),
+            funs(ifelse(is.na(.), 0, .)))
+
+# fit mark-recapture models
+Nmods = capHist %>%
+  # filter out places with no recaptures (no way to make estimate)
+  filter(R > 0) %>%
+  with(.,
+       mrClosed(M,
+                C,
+                R,
+                method = 'Chapman'))
+
+# combine summarised data with model output
+abund_df = capHist %>%
+  # filter out places with no recaptures (no way to make estimate)
+  filter(R > 0) %>%
+  bind_cols(summary(Nmods,
+                    incl.SE = T,
+                    incl.all = F) %>%
+              tbl_df()) %>%
+  bind_cols(confint(Nmods,
+                    incl.all = F) %>%
+              tbl_df()) %>%
+  mutate(probCap = M / N,
+         probCap_SE = M * SE / (N^2)) %>%
+  # add the reaches back in with no recaptures
+  bind_rows(capHist %>%
+              filter(R == 0)) %>%
+  arrange(Species, SiteName, HabitatReach)
+
+
+# save as .csv file
+write.csv(abund_df,
+          'Roving_2019_DASH_Reach_abundances.csv',
+          row.names = F)
+write.csv(movementsummary,
+          'Roving_2019_DASH_Movement.csv')
+
